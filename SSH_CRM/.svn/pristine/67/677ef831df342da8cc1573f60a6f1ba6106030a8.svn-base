@@ -1,0 +1,11 @@
+package com.xiahu.service;
+
+import com.xiahu.domain.User;
+
+public interface UserService {
+	User getUserByCode(User u);
+
+	void save(User u);
+
+	void saveUser(User user);
+}
