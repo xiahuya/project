@@ -1,0 +1,11 @@
+package com.xiahu.bos.service;
+
+import java.util.List;
+
+import com.xiahu.bos.domain.Region;
+
+public interface IRegionService {
+
+	void saveBatch(List<Region> regionList);
+
+}

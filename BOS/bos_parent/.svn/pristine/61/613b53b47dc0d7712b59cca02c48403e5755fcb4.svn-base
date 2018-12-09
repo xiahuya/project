@@ -1,0 +1,30 @@
+package com.xiahu.bos.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.xiahu.bos.dao.IRegionDao;
+import com.xiahu.bos.domain.Region;
+import com.xiahu.bos.service.IRegionService;
+/*
+ * 区域管理
+ */
+@Service
+@Transactional
+public class IRegionServiceImpl implements IRegionService {
+	@Autowired
+	private IRegionDao regiondao;
+
+	/*
+	 * 批量保存区域数据
+	 */
+	public void saveBatch(List<Region> regionList) {
+		for(Region region:regionList){
+			regiondao.saveOrUpdate(region);
+		}
+	}
+
+}

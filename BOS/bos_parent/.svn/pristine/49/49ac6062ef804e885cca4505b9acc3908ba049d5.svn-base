@@ -1,0 +1,28 @@
+package com.xiahu.bos.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.xiahu.bos.dao.IUserDao;
+import com.xiahu.bos.domain.User;
+import com.xiahu.bos.service.IUserService;
+import com.xiahu.bos.utils.MD5Utils;
+@Service
+@Transactional
+public class UserServiceImpl implements IUserService{
+	@Autowired
+	private IUserDao userDao;
+	/***
+	 * 用户登录
+	 */
+	public User login(User user) {
+		//使用MD5加密密码
+		String password = MD5Utils.md5(user.getPassword());
+		return userDao.findUserByUsernameAndPassword(user.getUsername(),password);
+	}
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+	
+}

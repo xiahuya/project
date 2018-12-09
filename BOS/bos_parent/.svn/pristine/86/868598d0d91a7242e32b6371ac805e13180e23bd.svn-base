@@ -1,0 +1,9 @@
+package com.xiahu.bos.service;
+
+import com.xiahu.bos.domain.User;
+
+public interface IUserService {
+
+	public User login(User model);
+
+}
