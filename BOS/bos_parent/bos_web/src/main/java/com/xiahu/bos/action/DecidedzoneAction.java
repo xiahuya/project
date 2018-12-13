@@ -2,6 +2,7 @@ package com.xiahu.bos.action;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,16 +29,20 @@ public class DecidedzoneAction extends BaseAction<Decidedzone> {
 	/*
 	 * 添加定区信息
 	 */
+	@RequiresPermissions("decidedzone-add")
 	public String save() {
 		decidedzoneService.save(model, subareaid);
 
 		return LIST;
 	}
 
+	/*
+	 * 分页
+	 */
+	@RequiresPermissions("decidedzone-list")
 	public String pageQuery() {
 		decidedzoneService.getPageBean(pageBean);
-		this.java2Json(pageBean, new String[]{"currentPage","detachedCriteria",
-				"pageSize","subareas","decidedzones"});
+		this.java2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize","subareas","decidedzones"});
 		return NONE;
 	}
 	

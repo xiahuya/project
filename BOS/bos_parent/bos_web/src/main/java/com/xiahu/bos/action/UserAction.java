@@ -2,7 +2,10 @@ package com.xiahu.bos.action;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -10,15 +13,15 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.xiahu.bos.Customer;
-import com.xiahu.bos.ICustomerService;
 import com.xiahu.bos.action.base.BaseAction;
+import com.xiahu.bos.domain.Role;
 import com.xiahu.bos.domain.User;
 import com.xiahu.bos.service.IUserService;
 import com.xiahu.bos.utils.BOSUtils;
@@ -28,8 +31,6 @@ import com.xiahu.bos.utils.MD5Utils;
 @Scope("prototype") // 多例
 public class UserAction extends BaseAction<User> {
 
-	@Autowired
-	private ICustomerService customerService;
 
 	@Autowired
 	private IUserService userService;
@@ -51,7 +52,6 @@ public class UserAction extends BaseAction<User> {
 	 * @return
 	 */
 	public String login() {
-		List<Customer> findAll = customerService.findAll();
 		// 从Session中获取生成的验证码
 		String validatecode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
 		System.out.println(checkcode);
@@ -64,6 +64,7 @@ public class UserAction extends BaseAction<User> {
 			AuthenticationToken token = new UsernamePasswordToken(model.getUsername(),
 					MD5Utils.md5(model.getPassword()));
 			try {
+				// 执行login方法,进入安全管理器中执行BOSRealm
 				subject.login(token);
 			} catch (IncorrectCredentialsException e) {
 				e.printStackTrace();
@@ -78,6 +79,7 @@ public class UserAction extends BaseAction<User> {
 				return LOGIN;
 			}
 
+			// 从安全管理器中找到该从BOSRealm中的user对象
 			User user = (User) subject.getPrincipal();
 			ServletActionContext.getRequest().getSession().setAttribute("loginUser", user);
 			return HOME;
@@ -95,8 +97,6 @@ public class UserAction extends BaseAction<User> {
 	 * @return
 	 */
 	public String login_xx() {
-		List<Customer> findAll = customerService.findAll();
-		System.out.println(findAll);
 		// 从Session中获取生成的验证码
 		String validatecode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
 		System.out.println(checkcode);
@@ -145,11 +145,9 @@ public class UserAction extends BaseAction<User> {
 		return NONE;
 	}
 
-	
-	//属性驱动
+	// 属性驱动
 	private String[] roleIds;
-	
-	
+
 	public void setRoleIds(String[] roleIds) {
 		this.roleIds = roleIds;
 	}
@@ -158,17 +156,51 @@ public class UserAction extends BaseAction<User> {
 	 * 添加用户
 	 */
 	public String add() {
-		userService.save(model,roleIds);
+		userService.save(model, roleIds);
 		return LIST;
 	}
-	
+
 	/*
 	 * 分页查询
 	 */
-	public String pageQuery(){
+	public String pageQuery() {
 		userService.pageQuery(pageBean);
-		this.java2Json(pageBean, new String[]{"noticebills","roles"});
-		return NONE;
+		this.java2Json(pageBean, new String[] { "noticebills", "roles" });
+		return LIST;
+	}
+
+	// 删除用户
+	private String ids;
+
+	public String deleteBatch() {
+		userService.deleteBatch(ids);
+		return LIST;
+	}
+
+	/*
+	 * 修改
+	 */
+	public String editUser() {
+		User user = userService.findById(model.getId());
+		user.setUsername(model.getUsername());
+		user.setPassword(MD5Utils.md5(model.getPassword()));
+		user.setSalary(model.getSalary());
+		user.setBirthday(user.getBirthday());
+		user.setGender(model.getGender());
+		user.setStation(model.getStation());
+		user.setTelephone(model.getTelephone());
+		user.setRemark(model.getRemark());
+		user.setRoles(model.getRoles());
+		userService.update(user);
+		return LIST;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

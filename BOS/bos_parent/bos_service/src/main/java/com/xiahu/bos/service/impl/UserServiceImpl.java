@@ -47,22 +47,41 @@ public class UserServiceImpl implements IUserService {
 		password = MD5Utils.md5(password);
 		user.setPassword(password);
 		userDao.save(user);
-		if(roleIds != null && roleIds.length > 0){
+		if (roleIds != null && roleIds.length > 0) {
 			for (String roleId : roleIds) {
-				//手动构造托管对象
+				// 手动构造托管对象
 				Role role = new Role(roleId);
-				//用户对象关联角色对象
+				// 用户对象关联角色对象
 				user.getRoles().add(role);
 			}
 		}
 	}
 
-	
 	/*
 	 * 分页查询
 	 */
 	public void pageQuery(PageBean pageBean) {
 		userDao.getPageBean(pageBean);
+	}
+
+	/*
+	 * 删除
+	 */
+	public void deleteBatch(String ids) {
+		String[] split = ids.split(",");
+		for (String id : split) {
+			userDao.executeUpdate("user.delete", id);
+		}
+	}
+
+	@Override
+	public User findById(String id) {
+		return userDao.findById(id);
+	}
+
+	@Override
+	public void update(User user) {
+		userDao.update(user);
 	}
 
 }

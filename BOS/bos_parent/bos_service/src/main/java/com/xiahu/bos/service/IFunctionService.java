@@ -15,4 +15,10 @@ public interface IFunctionService {
 
 	public List<Function> findMenu();
 
+	public void deleteBatch(String ids);
+
+	public Function findById(String id);
+
+	public void update(Function function);
+
 }

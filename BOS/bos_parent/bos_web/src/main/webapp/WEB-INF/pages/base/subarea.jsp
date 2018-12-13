@@ -302,11 +302,11 @@
 			//页面加载完成后，动态创建图表
 			$("#test").highcharts({
 				title: {
-		            text: '各浏览器份额'
+		            text: '各地区份额'
 		        },
 		        series: [{
 		            type: 'pie',
-		            name: '浏览器占比',
+		            name: '地区占比',
 		            data: data
 		            
 		        }]

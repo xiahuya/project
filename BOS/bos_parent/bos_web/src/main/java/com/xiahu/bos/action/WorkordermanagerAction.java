@@ -2,6 +2,7 @@ package com.xiahu.bos.action;
 
 import java.io.IOException;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +18,7 @@ public class WorkordermanagerAction extends BaseAction<Workordermanage> {
 	@Autowired
 	private IWorkordermanagerService workordermanagerService;
 
+	@RequiresPermissions("workordermanager-add")
 	public String add() throws IOException {
 		String flag = "1";
 		try {

@@ -1,7 +1,5 @@
 package com.xiahu.bos.jobs;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,24 +29,7 @@ public class MailJob {
 	private String password;
 	private String smtpServer;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public void execute() {
-		System.out.println("要发邮件了。。。" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()));
 		try {
 			// 查询工单类型为新单的所有工单
 			List<Workbill> list = workbillDao.findAll();
@@ -98,5 +79,21 @@ public class MailJob {
 
 	public void setSmtpServer(String smtpServer) {
 		this.smtpServer = smtpServer;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class RegionAction extends BaseAction<Region> {
 	/*
 	 * 导入文件
 	 */
+	@RequiresPermissions("region-importFile")
 	public String importFile() throws IOException {
 		List<Region> regionList = new ArrayList<Region>();
 		// 使用POI解析Excel文件
@@ -89,6 +91,7 @@ public class RegionAction extends BaseAction<Region> {
 	/*
 	 * 批量删除区域
 	 */
+	@RequiresPermissions("region-delete")
 	public String deleteBatch() {
 		regionService.deleteBatch(ids);
 
@@ -98,6 +101,7 @@ public class RegionAction extends BaseAction<Region> {
 	/*
 	 * 添加区域
 	 */
+	@RequiresPermissions("region-add")
 	public String addRegion() {
 		regionService.save(model);
 		return LIST;
@@ -106,6 +110,7 @@ public class RegionAction extends BaseAction<Region> {
 	/*
 	 * 修改区域信息
 	 */
+	@RequiresPermissions("region-edit")
 	public String editRegion() {
 		Region region = regionService.findById(model.getId());
 		// 使用页面提交的数据进行覆盖
@@ -122,6 +127,7 @@ public class RegionAction extends BaseAction<Region> {
 	/*
 	 * 分页查询
 	 */
+	@RequiresPermissions("region-list")
 	public String pageQuery() throws IOException {
 		regionService.getPageBean(pageBean);
 		this.java2Json(pageBean, new String[] { "currentPage", "pageSize", "detachedCriteria", "subareas" });

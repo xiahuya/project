@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,25 +27,35 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath }/js/ocupload/jquery.ocupload-1.1.2.js"></script>	
+<script src="${pageContext.request.contextPath }/js/jquery.ocupload-1.1.2.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#grid").datagrid({
-			url : '',
+			url : '${pageContext.request.contextPath}/WorkorderimportAction_pageQuery.action',
 			toolbar : [
 				{
 					id : 'btn-download',
 					text : '模板下载',
 					iconCls : 'icon-save',
 					handler : function(){
-						location.href = "${pageContext.request.contextPath}/download.action?filename=工作单导入模板.xls";
+						window.open("http://www.xhjava.cn/aa.xls");
 					}
-				},{
+				},
+				<shiro:hasPermission name="workorderImport-import">
+				{
 					id : 'btn-upload',
 					text : '批量导入',
-					iconCls : 'icon-redo'
-				},{
+					iconCls : 'icon-redo',
+					handler : function (){
+						//导入按钮添加事件
+						$("#btn-upload").upload({
+						    action:"${pageContext.request.contextPath}/WorkorderimportAction_importFile.action",
+						    name:"workorderFile"
+					    });
+					}
+				},
+				</shiro:hasPermission>
+				{
 					id : 'btn-refresh',
 					text : '刷新',
 					iconCls : 'icon-reload',
@@ -119,10 +130,14 @@
 			fit : true // 占满容器
 		});
 		
+		
+		
 		// 一键上传
-		$("#btn-upload").upload({
-			 name: 'upload',  // <input name="file" />
-		     action: '${pageContext.request.contextPath}/workOrderManage_batchImport.action',  // 提交请求action路径
+		/* $("#btn-upload").upload({
+			action:"${pageContext.request.contextPath}/RegionAction_importFile.action",
+		    name:"regionFile"
+			name: 'upload',  // <input name="file" />
+		     action: '${pageContext.request.contextPath}/WorkorderimportAction_batchImport.action',  // 提交请求action路径
 		     enctype: 'multipart/form-data', // 编码格式
 		     autoSubmit: true, // 选中文件提交表单
 		     onComplete: function(response) {
@@ -132,8 +147,8 @@
 		        	}else{
 		        		$.messager.alert("错误提示",response,"error");
 		        	}
-		     }// 请求完成时 调用函数
-		});
+		     }// 请求完成时 调用函数 
+		}); */
 	});
 </script>	
 </head>

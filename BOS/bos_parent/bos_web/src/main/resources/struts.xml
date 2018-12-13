@@ -27,12 +27,13 @@
 		<!-- 全局结果集定义 -->
 		<global-results>
 			<result name="login">/login.jsp</result>
+			<!-- 权限不足 -->
 			<result name="unauthorized">/404.html</result>
 		</global-results>
 		
 		<!-- 自定义全局异常跳转 -->
 		<global-exception-mappings>
-		    <exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+		    <exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException" />
 		</global-exception-mappings>
 
 		<!-- 需要进行权限控制的页面访问 -->
@@ -78,6 +79,16 @@
 		<!-- 角色管理 -->
 		<action name="RoleAction_*" class="roleAction" method="{1}">
 		    <result name="list">/WEB-INF/pages/admin/role.jsp</result>	
+		</action>
+		
+		<!-- 工单管理 -->
+		<action name="WorkbillAction_*" class="workbillAction" method="{1}">
+		    <result name="list">/WEB-INF/pages/qupai/workbill.jsp</result>	
+		</action>
+		
+		<!-- 工作单导入 -->
+		<action name="WorkorderimportAction_*" class="workorderimportAction" method="{1}">
+		    <result name="list">/WEB-INF/pages/qupai/workorderimport.jsp</result>	
 		</action>
 	</package>
 </struts>

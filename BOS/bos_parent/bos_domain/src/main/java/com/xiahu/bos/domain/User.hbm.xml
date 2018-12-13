@@ -48,4 +48,8 @@
 	 <query name="user.editpassword">
     	UPDATE User SET password = ? WHERE id = ?
     </query>
+    
+    <query name="user.delete">
+        DELETE FROM User  where id = ?
+    </query>
 </hibernate-mapping>

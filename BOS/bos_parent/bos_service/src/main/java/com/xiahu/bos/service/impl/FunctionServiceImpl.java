@@ -53,11 +53,33 @@ public class FunctionServiceImpl implements IFunctionService {
 		if (user.getUsername().equals("admin")) {
 			// 如果是超级管理员,就查询所有权限
 			list = functionDao.findMenu();
-		}else{
-			//根据用户ID查找权限
-			list=functionDao.findMenuByUserId(user.getId());
+		} else {
+			// 根据用户ID查找权限
+			list = functionDao.findMenuByUserId(user.getId());
 		}
 		return list;
+	}
+
+	/*
+	 * 删除权限
+	 */
+	public void deleteBatch(String ids) {
+		String[] split = ids.split(",");
+		for (String id : split) {
+			functionDao.executeUpdate("function.delete", id);
+		}
+	}
+
+	/*
+	 * 根据ID查找权限
+	 */
+	public Function findById(String id) {
+		return functionDao.findById(id);
+	}
+
+	@Override
+	public void update(Function function) {
+		functionDao.update(function);
 	}
 
 }

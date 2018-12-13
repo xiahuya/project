@@ -82,7 +82,8 @@
 					</tr>
 					<tr>
 						<td>父功能点</td>
-						<td>												 
+						<td>			
+						    <!-- easyUI-tree -->									 
 						    <input class="easyui-combotree" name="parentFunction.id"
 							 	data-options="url:'FunctionAction_ajaxList.action'" 
 							 	style="width:170px;">

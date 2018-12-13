@@ -80,7 +80,7 @@ public class StaffServiceImpl implements IStaffService {
 		return staffDao.findByCriteria(detachedCriteria);
 	}
 
-	// 跟新取派员
+	// 更新取派员
 	public void updateStaff(String[] roleTds) {
 		if (roleTds != null && roleTds.length > 0) {
             for(String id:roleTds){

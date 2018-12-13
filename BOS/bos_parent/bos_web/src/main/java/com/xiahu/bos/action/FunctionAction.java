@@ -53,8 +53,42 @@ public class FunctionAction extends BaseAction<Function> {
 	 */
 	public String findMenu() {
 		List<Function> list = functionService.findMenu();
-		this.java2Json(list, new String[]{"parentFunction","roles","children"});
+		this.java2Json(list, new String[] { "parentFunction", "roles", "children" });
 		return NONE;
+	}
+
+	/*
+	 * 删除权限
+	 */
+	private String ids;
+
+	public String deleteBatch() {
+		functionService.deleteBatch(ids);
+		return LIST;
+	}
+
+	/*
+	 * 修改权限
+	 */
+	public String editFunction() {
+		Function function = functionService.findById(model.getId());
+		function.setParentFunction(model.getParentFunction());
+		function.setName(model.getName());
+		function.setCode(model.getCode());
+		function.setDescription(model.getDescription());
+		function.setPage(model.getPage());
+		function.setGeneratemenu(model.getGeneratemenu());
+		function.setZindex(model.getZindex());
+		functionService.update(function);
+		return LIST;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

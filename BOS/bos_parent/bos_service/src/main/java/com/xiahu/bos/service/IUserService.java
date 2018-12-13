@@ -14,4 +14,10 @@ public interface IUserService {
 
 	public void pageQuery(PageBean pageBean);
 
+	public void deleteBatch(String ids);
+
+	public User findById(String id);
+
+	public void update(User user);
+
 }

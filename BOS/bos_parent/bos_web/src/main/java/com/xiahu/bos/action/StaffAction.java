@@ -29,6 +29,7 @@ public class StaffAction extends BaseAction<Staff> {
 	/*
 	 * 添加取派员
 	 */
+	@RequiresPermissions("staff-add")
 	public String addStaff() {
 		staffService.save(model);
 		return LIST;
@@ -57,6 +58,7 @@ public class StaffAction extends BaseAction<Staff> {
 	/*
 	 * 还原取派员(更新)
 	 */
+	@RequiresPermissions("staff-update")
 	public String updateStaff() {
 		staffService.updateStaff(roleIds);
 		return LIST;
@@ -68,14 +70,7 @@ public class StaffAction extends BaseAction<Staff> {
 	/*
 	 * 分页查询方法
 	 */
-	// public String pageQuery() throws IOException {
-	//
-	// staffService.getPageBean(pageBean);
-	// this.java2Json(pageBean, new String[] { "currentPage", "pageSize",
-	// "detachedCriteria", "decidedzones", });
-	// return NONE;
-	// }
-
+	@RequiresPermissions("staff-list")
 	public String pageQuery() throws IOException {
 		DetachedCriteria dc = pageBean.getDetachedCriteria();
 		// 动态添加过滤条件
@@ -102,7 +97,7 @@ public class StaffAction extends BaseAction<Staff> {
 	 * 批量删除取派员
 	 */
 
-	@RequiresPermissions("staff-delete")
+	@RequiresPermissions("staff-delete")//执行这个方法，需要当前用户具有staff-delete这个权限
 	public String deleteBatch() {
 		staffService.deleteBatch(ids);
 		return LIST;
@@ -111,7 +106,6 @@ public class StaffAction extends BaseAction<Staff> {
 	/*
 	 * 修改取派员信息
 	 */
-	@RequiresPermissions("staff-edit")
 	public String editStaff() {
 		Staff staff = staffService.findById(model.getId());
 		// 使用页面提交的数据进行覆盖

@@ -39,9 +39,10 @@ public class BOSRealm extends AuthorizingRealm {
 		}
 
 		// 简单认证信息对象
-		AuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
 		// 框架负责比对数据库中的密码和页面输入的密码是否一致
+		AuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
 		return info;
+		// 如果认证通过,UserAction_login方法可以取出该user
 	}
 
 	// 授权方法

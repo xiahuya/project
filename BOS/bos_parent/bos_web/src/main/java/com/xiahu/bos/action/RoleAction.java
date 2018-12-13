@@ -10,6 +10,9 @@ import com.xiahu.bos.action.base.BaseAction;
 import com.xiahu.bos.domain.Role;
 import com.xiahu.bos.service.IRoleService;
 
+/*
+ * 角色Controller
+ */
 @Controller
 @Scope("prototype")
 public class RoleAction extends BaseAction<Role> {

@@ -12,6 +12,7 @@ import com.xiahu.bos.dao.INoticebillDao;
 import com.xiahu.bos.dao.IWorkbillDao;
 import com.xiahu.bos.domain.Decidedzone;
 import com.xiahu.bos.domain.Noticebill;
+import com.xiahu.bos.domain.PageBean;
 import com.xiahu.bos.domain.Staff;
 import com.xiahu.bos.domain.User;
 import com.xiahu.bos.domain.Workbill;
@@ -70,4 +71,5 @@ public class NoticebillServiceImpl implements INoticebillService {
 
 		}
 	}
+
 }

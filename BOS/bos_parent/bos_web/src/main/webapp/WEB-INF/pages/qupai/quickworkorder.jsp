@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -59,7 +60,7 @@
 	}
 	
 	//工具栏
-	var toolbar = [ {
+	var toolbar = [{
 		id : 'button-add',	
 		text : '新增一行',
 		iconCls : 'icon-edit',
@@ -69,12 +70,16 @@
 		text : '取消编辑',
 		iconCls : 'icon-cancel',
 		handler : doCancel
-	}, {
+	}, 
+	<shiro:hasPermission name="workordermanager-add">
+	{
 		id : 'button-save',
 		text : '保存',
 		iconCls : 'icon-save',
 		handler : doSave
-	}];
+	}
+	</shiro:hasPermission>
+	];
 	// 定义列
 	var columns = [ [ {
 		field : 'id',
@@ -175,7 +180,6 @@
 	});
 
 	function doDblClickRow(rowIndex, rowData){
-		alert("双击表格数据...");
 		console.info(rowIndex);
 		$('#grid').datagrid('beginEdit',rowIndex);
 		editIndex = rowIndex;

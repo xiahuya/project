@@ -39,6 +39,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 添加区域信息
 	 */
+	@RequiresPermissions("subarea-add")
 	public String save() {
 		subareaService.save(model);
 		return LIST;
@@ -47,6 +48,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 修改区域信息
 	 */
+	@RequiresPermissions("subarea-edit")
 	public String edit() {
 		Subarea subarea = subareaService.findById(model.getId());
 		// private Region region;
@@ -77,6 +79,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 		this.ids = ids;
 	}
 
+	@RequiresPermissions("subarea-delete")
 	public String deleteBatch() {
 		subareaService.deleteBatch(ids);
 		return LIST;
@@ -85,6 +88,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 分页查询
 	 */
+	@RequiresPermissions("subarea-list")
 	public String getSubareaList() {
 		DetachedCriteria dc = pageBean.getDetachedCriteria();
 		// 动态添加过滤条件
@@ -128,6 +132,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 分区数据导出功能
 	 */
+	@RequiresPermissions("subarea-export")
 	public String subareaExport() throws IOException {
 		// 查找所有分区数据
 		List<Subarea> list = subareaService.findAll();
@@ -180,6 +185,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 查询区域分区分布图数据
 	 */
+	@RequiresPermissions("subarea-map")
 	public String findSubareaGroupByProvince() {
 		List<Object> list = subareaService.findSubareaGroupByProvince();
 		this.java2Json(list, new String[] {});
@@ -211,6 +217,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 	/*
 	 * 导入文件
 	 */
+	@RequiresPermissions("subarea-import")
 	public String importFile() throws IOException {
 		List<Subarea> subareaList = new ArrayList<Subarea>();
 		// 使用POI解析Excel文件

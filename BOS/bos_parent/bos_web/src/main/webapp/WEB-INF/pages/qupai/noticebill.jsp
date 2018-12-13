@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,11 +30,55 @@
 <script type="text/javascript">
 	
 	function doRepeat(){
-		alert("追单...");
+		//获取数据表格中所有选中的行，返回数组对象
+		var rows = $("#grid").datagrid("getSelections");
+		 if(rows.length==0){			
+			//没有选择记录
+			$.messager.alert("提示信息","你还没有选择要追单的单","warning");
+		}else{
+			//选中了取派员,弹出确认框
+			$.messager.confirm("删除确认","你确定追单吗？",function(r){
+				if(r){
+					var array= new Array();					
+					//确定删除					
+	                for (var i = 0; i < rows.length; i++) {						
+	                    var staff = rows[i];//json对象
+	                    var id = staff.id;
+	                    array.push(id);
+					}
+					var ids =array.join(",");
+					//将数据发送给服务端
+					location.href="${pageContext.request.contextPath}/WorkbillAction_zhuidan.action?ids="+ids;
+				}
+			});
+
+		}
 	}
 	
 	function doCancel(){
-		alert("销单...");
+		//获取数据表格中所有选中的行，返回数组对象
+		var rows = $("#grid").datagrid("getSelections");
+		 if(rows.length==0){			
+			//没有选择记录
+			$.messager.alert("提示信息","你还没有选择要销单的单","warning");
+		}else{
+			//选中了取派员,弹出确认框
+			$.messager.confirm("删除确认","你确定销单吗？",function(r){
+				if(r){
+					var array= new Array();					
+					//确定删除					
+	                for (var i = 0; i < rows.length; i++) {						
+	                    var staff = rows[i];//json对象
+	                    var id = staff.id;
+	                    array.push(id);
+					}
+					var ids =array.join(",");
+					//将数据发送给服务端
+					location.href="${pageContext.request.contextPath}/WorkbillAction_xiaodan.action?ids="+ids;
+				}
+			});
+
+		}
 	}
 	
 	function doSearch(){
@@ -41,22 +86,32 @@
 	}
 	
 	//工具栏
-	var toolbar = [ {
+	var toolbar = [ 
+    <shiro:hasPermission name="staff-update">
+	{
 		id : 'button-search',	
 		text : '查询',
 		iconCls : 'icon-search',
 		handler : doSearch
-	}, {
+	}, 
+	</shiro:hasPermission>
+	<shiro:hasPermission name="staff-update">
+	{
 		id : 'button-repeat',
 		text : '追单',
 		iconCls : 'icon-redo',
 		handler : doRepeat
-	}, {
+	}, 
+	</shiro:hasPermission>
+	<shiro:hasPermission name="staff-update">
+	{
 		id : 'button-cancel',	
 		text : '销单',
 		iconCls : 'icon-cancel',
 		handler : doCancel
-	}];
+	}
+	</shiro:hasPermission>
+	];
 	// 定义列
 	var columns = [ [ {
 		field : 'id',
@@ -112,7 +167,7 @@
 			pageList: [30,50,100],
 			pagination : true,
 			toolbar : toolbar,
-			url :  "",
+			url :  "${pageContext.request.contextPath}/WorkbillAction_pageQuery.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
@@ -136,7 +191,7 @@
 	});
 
 	function doDblClickRow(){
-		alert("双击表格数据...");
+		
 	}
 </script>	
 </head>

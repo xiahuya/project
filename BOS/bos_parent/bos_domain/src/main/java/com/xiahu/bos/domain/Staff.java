@@ -13,6 +13,7 @@ public class Staff implements java.io.Serializable {
 
 	private String id;
 	private String name;
+
 	private String telephone;
 	private String haspda="0";
 	private String deltag="0";

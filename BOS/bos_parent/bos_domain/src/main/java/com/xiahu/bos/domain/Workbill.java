@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 /**
  * 工单
- * Workbill entity. @author MyEclipse Persistence Tools
  */
 
 public class Workbill implements java.io.Serializable {
@@ -35,6 +34,7 @@ public class Workbill implements java.io.Serializable {
 	public Workbill() {
 	}
 
+
 	/** minimal constructor */
 	public Workbill(String id, Timestamp buildtime) {
 		this.id = id;
@@ -56,6 +56,8 @@ public class Workbill implements java.io.Serializable {
 	}
 
 	// Property accessors
+
+
 
 	public String getId() {
 		return this.id;

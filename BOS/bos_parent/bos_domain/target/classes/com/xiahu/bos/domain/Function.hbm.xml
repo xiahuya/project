@@ -46,4 +46,8 @@
             <one-to-many class="com.xiahu.bos.domain.Function" />
         </set>
     </class>
+    
+    <query name="function.delete">
+        DELETE FROM Function  where id = ?
+    </query>
 </hibernate-mapping>

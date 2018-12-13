@@ -7,13 +7,11 @@
 		{ "id":"12", "pId":"0", "name":"受理"},
 		{ "id":"121", "pId":"12", "name":"业务受理" ,"page":"page_qupai_noticebill_add.action"},
 		{ "id":"122", "pId":"12", "name":"工作单快速录入" ,"page":"page_qupai_quickworkorder.action"},
-		{ "id":"124", "pId":"12", "name":"工作单导入" ,"page":"page_qupai_workorderimport.action"},
-		{ "id":"13", "pId":"0", "name":"调度"},
-		{ "id":"131", "pId":"13", "name":"查台转单","page":""},
-		{ "id":"132", "pId":"13", "name":"人工调度","page":"page_qupai_diaodu.action"}
+		{ "id":"124", "pId":"12", "name":"工作单导入" ,"page":"page_qupai_workorderimport.action"}
+		
 ]
 
-
+        
               
               
               

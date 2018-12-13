@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,8 +38,8 @@
 		
 		// 基本功能菜单加载
 		$.ajax({
-			//url : '${pageContext.request.contextPath}/FunctionAction_findMenu.action',
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			url : '${pageContext.request.contextPath}/FunctionAction_findMenu.action',
+			//url : '${pageContext.request.contextPath}/json/menu.json',
 			type : 'POST',
 			dataType : 'text',
 			success : function(data) {
@@ -50,6 +51,7 @@
 			}
 		});
 		
+		
 		// 系统管理菜单加载
 		$.ajax({
 			url : '${pageContext.request.contextPath}/json/admin.json',
@@ -57,7 +59,9 @@
 			dataType : 'text',
 			success : function(data) {
 				var zNodes = eval("(" + data + ")");
-				$.fn.zTree.init($("#adminMenu"), setting, zNodes);
+				<shiro:hasPermission name="admin">
+				 $.fn.zTree.init($("#adminMenu"), setting, zNodes);
+				</shiro:hasPermission>
 			},
 			error : function(msg) {
 				alert('菜单加载异常!');
@@ -237,7 +241,7 @@
 				<tr>
 					<td style="width: 300px;">
 						<div style="color: #999; font-size: 8pt;">
-							传智播客 | Powered by <a href="http://www.itcast.cn/">itcast.cn</a>
+							夏虎 | Powered by <a href="http://www.xhjava.cn/">xhjava.cn</a>
 						</div>
 					</td>
 					<td style="width: *;" class="co1"><span id="online"
