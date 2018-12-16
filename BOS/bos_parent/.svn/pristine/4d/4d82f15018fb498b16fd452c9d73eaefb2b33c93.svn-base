@@ -1,4 +1,0 @@
-jdbc.driverClass=com.mysql.jdbc.Driver
-jdbc.jdbcUrl=jdbc:mysql:///bos32
-jdbc.user=xiahu
-jdbc.password=root
